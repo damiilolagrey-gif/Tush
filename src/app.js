@@ -9,7 +9,7 @@ import { page, publicHeader, html } from './html.js';
 export function createApp({ db, config = {} }) {
   const cfg = {
     sessionSecret: config.sessionSecret || process.env.SESSION_SECRET || 'dev-only-secret-change-me',
-    baseUrl: config.baseUrl || process.env.BASE_URL || 'http://localhost:3000',
+    baseUrl: config.baseUrl || process.env.BASE_URL || process.env.RENDER_EXTERNAL_URL || 'http://localhost:3000',
     secureCookies: config.secureCookies ?? process.env.NODE_ENV === 'production',
     paystack: config.paystack || createPaystack({ secretKey: process.env.PAYSTACK_SECRET_KEY }),
     now: config.now, // injectable clock for tests
