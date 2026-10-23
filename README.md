@@ -33,7 +33,8 @@ Demo owner login: `demo@booknaija.ng` / `demo1234` (Glow Lounge Spa & Salon). Th
 | `PORT` | HTTP port (default 3000) |
 | `DATABASE_PATH` | SQLite file (default `data/booknaija.db`). Put it on a persistent disk in production. |
 | `SESSION_SECRET` | Required in production. A long random string for signing login cookies. |
-| `BASE_URL` | Public URL, used in Paystack callbacks and shared links |
+| `BASE_URL` | Public URL, used in Paystack callbacks and shared links (defaults to Render's URL on Render) |
+| `SEED_DEMO` | `true` seeds demo data into an empty database on startup |
 | `PAYSTACK_SECRET_KEY` | Turns on "Pay now with Paystack". Without it, customers pay at the venue. |
 | `APP_NAME` | Brand name shown in the UI |
 
@@ -41,11 +42,15 @@ For Paystack, set the webhook URL in your Paystack dashboard to `https://<your-d
 
 ## Deploy
 
-Any Node host with a persistent disk works:
+**Render (recommended):** this repo includes a `render.yaml` blueprint.
 
-- **Render:** create a Web Service with build command `npm install` and start command `npm start`. Add a disk mounted at `/var/data` and set `DATABASE_PATH=/var/data/booknaija.db`.
-- **Railway or Fly.io:** same idea. Attach a volume and point `DATABASE_PATH` at it.
-- **VPS:** run `npm start` under systemd or pm2, behind nginx with TLS.
+1. In Render, click **New → Blueprint** and pick this repository.
+2. Fill in `PAYSTACK_SECRET_KEY` when Render asks. You can leave it blank to start with pay-at-venue only.
+3. Click **Apply**. Render builds the app and attaches a 1 GB disk for the database. It also generates `SESSION_SECRET` for you.
+
+The blueprint uses the Starter plan, because persistent disks need a paid plan. On the free plan you would lose every booking whenever the app restarts. `SEED_DEMO=true` fills an empty database with the demo businesses. Set it to `false` and wipe the disk before onboarding real businesses. To use your own domain, add it under the service's **Settings → Custom Domains** and set `BASE_URL` to match.
+
+**Other hosts:** any Node host with a persistent disk works, such as Railway, Fly.io, or a VPS running `npm start` under systemd or pm2 behind nginx. Set `DATABASE_PATH` to a file on the persistent volume.
 
 ## Code map
 

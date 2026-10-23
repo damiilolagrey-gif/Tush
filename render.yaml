@@ -1,0 +1,27 @@
+# One-click deploy: Render dashboard → New → Blueprint → pick this repo.
+services:
+  - type: web
+    name: booknaija
+    runtime: node
+    plan: starter # persistent disks need a paid plan; the free plan would lose data on every restart
+    region: frankfurt # closest Render region to Nigeria
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22.12.0"
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /var/data/booknaija.db
+      - key: SEED_DEMO
+        value: "true" # set to "false" before onboarding real businesses
+      - key: PAYSTACK_SECRET_KEY
+        sync: false # paste your sk_live_... or sk_test_... key in the Render dashboard
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 1
