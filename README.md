@@ -15,7 +15,7 @@ Nigerian defaults: prices are stored in kobo and shown in ₦. All times are in 
 
 ## Run it
 
-You need Node.js 22.5 or newer. It uses the built-in `node:sqlite`, so there are no native modules.
+You need Node.js 22.13 or newer. It uses the built-in `node:sqlite`, so there are no native modules.
 
 ```bash
 npm install

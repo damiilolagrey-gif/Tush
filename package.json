@@ -4,7 +4,7 @@
   "private": true,
   "description": "Appointment booking, scheduling and revenue tracking for Nigerian service businesses.",
   "type": "module",
-  "engines": { "node": ">=22.5" },
+  "engines": { "node": ">=22.13" },
   "scripts": {
     "start": "node --disable-warning=ExperimentalWarning src/server.js",
     "dev": "node --disable-warning=ExperimentalWarning --watch src/server.js",
